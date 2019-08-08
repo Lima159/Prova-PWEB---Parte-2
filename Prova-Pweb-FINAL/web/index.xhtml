@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Sessão da tarde do IFBA</title>
+        
+        <h1 align="center">Sessão da Tarde</h1>
+    </h:head>
+    <h:body>
+        <h:form> 
+            <p:growl id="mensagem" showDetail="true" sticky="true" />
+            <div align="center">
+            <p:panel header="Curso de ADS" style="width: 20%; text-align:center">  
+                <h:panelGrid columns="2" cellpadding="5">  
+                    <p:outputLabel for="destinatario" value="Para:" />   
+                    <p:inputText id="destinatario" value="#{formController.formulario.destinatario}" required="true" />
+                    <p:outputLabel for="telDestinatario" value="Telefax:" />   
+                    <p:inputText id="telDestinatario" value="#{formController.formulario.telDestinatario}" required="true" />
+                    <p:outputLabel for="emailDestinatario" value="e-mail:" />   
+                    <p:inputText id="emailDestinatario" value="#{formController.formulario.emailDestinatario}" required="true" />
+                </h:panelGrid>  
+                <h:panelGrid columns="2" cellpadding="5">  
+                    <p:outputLabel for="remetente" value="De:" />   
+                    <p:inputText id="remetente" value="#{formController.formulario.remetente}" required="true" />
+                    <p:outputLabel for="telRemetente" value="Telefax:" />   
+                    <p:inputText id="telRemetente" value="#{formController.formulario.telRemetente}" required="true" />
+                    <p:outputLabel for="emailRemetente" value="e-mail:" />   
+                    <p:inputText id="emailRemetente" value="#{formController.formulario.emailRemetente}" required="true" />
+                    <p:outputLabel for="data" value="Data:" />   
+                    
+                    <p:calendar id="data" value="#{formController.formulario.data}" required="true"  pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </h:panelGrid>  
+                <h:panelGrid style="margin: 0 auto;">
+                    <p:commandButton value="Enviar" actionListener="#{formController.salvar}" update="mensagem"/>
+                </h:panelGrid>
+                
+                
+            </p:panel> 
+            </div>
+        </h:form>
+        
+        <h:form id="form">
+            <div>
+                <p:growl id="msgs" showDetail="true"/>
+                
+                <p:dataTable var="forms" value="#{formController.forms}" paginator="true" rows="7"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                         {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="3,5,10" widgetVar="50" style="width: 1800px;" editable="true" editMode="cell">
+                    
+                    <f:facet name="header">
+                        Edite as células com o click
+                    </f:facet>
+                    
+                    <p:ajax event="cellEdit" listener="#{formController.attForms}" update=":form:msgs" />
+                    <p:ajax event="rowEdit" listener="#{formController.onRowEdit}" update=":form:msgs" />
+                    <p:ajax event="rowEditCancel" listener="#{formController.onRowCancel}" update=":form:msgs" />
+                    
+                    <p:column headerText="Destinatario">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{forms.destinatario}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput" value="#{forms.destinatario}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Telefone Destinatario">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{forms.telDestinatario}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput1" value="#{forms.telDestinatario}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="E-mail Destinatario">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{forms.emailDestinatario}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput2" value="#{forms.emailDestinatario}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Remetente">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{forms.remetente}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput3" value="#{forms.remetente}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Telefone Remetente">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{forms.telRemetente}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput4" value="#{forms.telRemetente}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="E-mail Remetente">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{forms.emailRemetente}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput5" value="#{forms.emailRemetente}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Data">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{forms.data}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput6" value="#{forms.data}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                                        
+                    
+                    <p:column style="width:35px">
+                        <p:rowEditor />
+                        <h:commandLink value="Delete" action="#{formController.deleteAction(forms)}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </h:body>
+    
+    <style type="text/css">
+        .ui-row-editor .ui-row-editor-pencil {
+            margin-left:8px;
+        }
+    </style>
+</html>
+
